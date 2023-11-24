@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "../prisma/generated"
+  binaryTargets = [ "native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x" ]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://xmaffqhykswkod:44e16662d8347c3eee0d01b86cd6104773ddecb524282954d1a7fba80736bcb0@ec2-54-75-177-251.eu-west-1.compute.amazonaws.com:5432/d26fff3jpsgppi"
+}
+
+model Task {
+  id             Int           @id @default(autoincrement())
+  title          String
+  assigneeName   String        @default("Unassigned")
+  assigneeAvatar String        @default("https://entro.security/wp-content/uploads/2023/05/entro-footer-icon.svg")
+  status         String
+  creationDate   String      
+  description    String      
+}
+
+model TaskRelation {
+  id           Int      @id @unique
+  taskId       Int
+  relatedId    Int
+}
