@@ -4,7 +4,7 @@ import { RootState } from '..'
 import prisma from '@/prisma'
 
 interface TasksState {
-  activeTask: Task | undefined
+  activeTask: Task
   tasks: Task[]
   relatedTasks: Task[]
   loading: boolean
@@ -131,6 +131,7 @@ export const getTask = createAsyncThunk<Task, number, { state: RootState }>(
 export const addRelatedTask = createAsyncThunk<Task, Task, { state: RootState }>(
   '/addRelatedTask',
   async (newRelatedTask) => {
+    return newRelatedTask
   }
 )
 

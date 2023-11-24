@@ -6,7 +6,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://xmaffqhykswkod:44e16662d8347c3eee0d01b86cd6104773ddecb524282954d1a7fba80736bcb0@ec2-54-75-177-251.eu-west-1.compute.amazonaws.com:5432/d26fff3jpsgppi"
+  url      = env("DATABASE_URL")
 }
 
 model Task {

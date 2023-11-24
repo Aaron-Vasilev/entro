@@ -28,7 +28,7 @@ export function RelatedWatchers({ clickOnTask, linkTask }: Props) {
           px="2px"
           fontSize="14px"
           borderColor="black"
-          borderBottom={isActive('R') && "2px solid"}
+          borderBottom={isActive('R') ? "2px solid" : ""}
           onClick={() => setCurrentTab('R')}
         >
           Related tasks
@@ -37,7 +37,7 @@ export function RelatedWatchers({ clickOnTask, linkTask }: Props) {
           pb="18px"
           fontSize="14px"
           borderColor="black"
-          borderBottom={isActive('W') && "2px solid"}
+          borderBottom={isActive('W') ? "2px solid" : ''}
           onClick={() => setCurrentTab('W')}
         >
           Watchers

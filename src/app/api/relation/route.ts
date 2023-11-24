@@ -1,13 +1,13 @@
 import prisma from "@/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
-export async function GET(_req: NextRequest) {
+export async function GET(req: NextRequest) {
   const relation = req.nextUrl.searchParams.get('relation')
   const query = req.nextUrl.searchParams.get('query')
 
-  const tasks = await prisma.task.findMany({ where:  })
+  //const tasks = await prisma.task.findMany({ where:  })
 
-  return NextResponse.json(tasks)
+  //return NextResponse.json(tasks)
 }
 
 export async function POST(req: NextRequest) {

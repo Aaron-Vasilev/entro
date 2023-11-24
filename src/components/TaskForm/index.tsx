@@ -32,7 +32,8 @@ export function TaskForm({ setCreation }: Props) {
   } = useForm({
     defaultValues: {
       title: '',
-      description: ''
+      description: '',
+      assigneeName: 'Unassigned'
     }
   })
 
