@@ -68,7 +68,8 @@ export const taskSlice = createSlice({
         state.loading = true
       })
       .addCase(getTask.fulfilled, (state, action) => {
-        state.activeTask = action.payload
+        if (state.activeTask.id !== action.payload.id)
+          state.activeTask = action.payload
         state.loading = false
       })
       .addCase(addRelatedTask.pending, (state) => {

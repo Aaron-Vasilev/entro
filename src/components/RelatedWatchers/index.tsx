@@ -45,7 +45,7 @@ export function RelatedWatchers({ clickOnTask, linkTask }: Props) {
       </Flex>
       { currentTab === 'R' ? 
         <>
-          < TaskList tasks={relatedTasks} clickOnTask={clickOnTask}/> 
+          <TaskList tasks={relatedTasks} clickOnTask={clickOnTask}/> 
           <LinkTask linkTask={linkTask} />
         </>
       : 
