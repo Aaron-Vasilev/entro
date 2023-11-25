@@ -7,10 +7,11 @@ import { useRouter } from 'next/navigation'
 import { TaskInfo } from '@/components/TaskInfo'
 import { TaskDetail } from '@/components/TaskDetail'
 import { RelatedWatchers } from '@/components/RelatedWatchers'
-import { addRelatedTask, getTask } from '@/store/slices/taskSlice'
+import { getTask } from '@/store/slices/taskSlice'
 import { RootState, useAppDispatch } from '@/store'
 import { Button } from '@/components/Button'
 import { useSelector } from 'react-redux'
+import Loading from '@/components/TaskList/loading'
 
 
 export default function TaskPage({ params }: { params: { id: string } }) {
@@ -24,7 +25,7 @@ export default function TaskPage({ params }: { params: { id: string } }) {
     dispatch(getTask(+params.id))
   }, [activeTask])
 
-  if (!activeTask?.id) return <h1>Loading</h1>
+  if (!activeTask?.id) return <Loading/>
 
   return (
     <>
@@ -65,7 +66,7 @@ export default function TaskPage({ params }: { params: { id: string } }) {
       <Box
         mt="74px"
       >
-        <RelatedWatchers clickOnTask={clickOnTask} linkTask={addRelatedTask}/>
+        <RelatedWatchers clickOnTask={clickOnTask}/>
       </Box>
     </Box>
     </>

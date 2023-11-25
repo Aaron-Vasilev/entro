@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Task } from '../../prisma/generated/'
 import { RootState } from '..'
-import prisma from '@/prisma'
 
 interface TasksState {
   activeTask: Task
@@ -53,10 +52,6 @@ export const taskSlice = createSlice({
         state.tasks.push(action.payload)
         state.loading = false
       })
-      .addCase(createTask.rejected, (state, action) => {
-        console.log('† line 56 action', action)
-        state.loading = false
-      })
       .addCase(getTasks.pending, (state) => {
         state.loading = true
       })
@@ -72,19 +67,19 @@ export const taskSlice = createSlice({
           state.activeTask = action.payload
         state.loading = false
       })
-      .addCase(addRelatedTask.pending, (state) => {
+      .addCase(addRelation.pending, (state) => {
         state.loading = true
       })
-      .addCase(addRelatedTask.fulfilled, (state, action) => {
-        state.relatedTasks.push(action.payload)
+      .addCase(addRelation.fulfilled, (state, action) => {
+        state.relatedTasks = action.payload
         state.loading = false
       })
-      .addCase(addRelatedTask.rejected, (state) => {
-        state.loading = false
-        state.error = true
+      .addCase(getRelatedTasks.pending, (state) => {
+        state.loading = true
       })
-      .addCase(pushRelatedTask.fulfilled, (state, action) => {
-        state.relatedTasks = [action.payload, ...state.relatedTasks]
+      .addCase(getRelatedTasks.fulfilled, (state, action) => {
+        state.relatedTasks = action.payload
+        state.loading = false
       })
   },
 })
@@ -129,16 +124,42 @@ export const getTask = createAsyncThunk<Task, number, { state: RootState }>(
   }
 )
 
-export const addRelatedTask = createAsyncThunk<Task, Task, { state: RootState }>(
-  '/addRelatedTask',
-  async (newRelatedTask) => {
-    return newRelatedTask
+export const getRelatedTasks = createAsyncThunk<Task[], undefined, { state: RootState }>(
+  '/getRelatedTasks',
+  async (_, thunkApi) => {
+    const activeTaskId = thunkApi.getState().tasks.activeTask.id
+    const res = await fetch(`/api/relation/${activeTaskId}`)
+
+    return await res.json()
   }
 )
 
-export const pushRelatedTask = createAsyncThunk<Task, Task, { state: RootState }>(
-  '/pushRelatedTask',
-  async (newRelatedTask, thunkApi) => {
-    return newRelatedTask
+
+export const addRelation = createAsyncThunk<Task[], number, { state: RootState }>(
+  '/addRelation',
+  async (relation, thunkApi) => {
+    const task = thunkApi.getState().tasks.activeTask.id
+    const res = await fetch(`/api/relation`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ task, relation })
+    })
+
+    return await res.json()
+  }
+)
+
+export const changeStatus = createAsyncThunk<void, { id: number, status: string }>(
+  '/changeStatus',
+  async (data) => {
+    await fetch(`/api/task`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
   }
 )

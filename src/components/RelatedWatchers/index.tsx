@@ -1,21 +1,26 @@
 import { Box, Button, Flex, Heading } from "@chakra-ui/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { TaskList } from "../TaskList"
 import { LinkTask } from "../LinkTask"
-import { RootState } from "../../store"
+import { RootState, useAppDispatch } from "../../store"
+import { getRelatedTasks } from "@/store/slices/taskSlice"
 
 type Tab = 'R' | 'W'
 
 interface Props {
   clickOnTask: Function
-  linkTask: Function
 }
 
-export function RelatedWatchers({ clickOnTask, linkTask }: Props) {
+export function RelatedWatchers({ clickOnTask }: Props) {
+  const dispatch = useAppDispatch()
   const relatedTasks = useSelector((state: RootState) => state.tasks.relatedTasks)
   const [currentTab, setCurrentTab] = useState('R')
   const isActive = (tab: Tab): boolean => currentTab === tab
+
+  useEffect(() => {
+    dispatch(getRelatedTasks())
+  }, [])
 
   return (
     <Box>
@@ -46,7 +51,7 @@ export function RelatedWatchers({ clickOnTask, linkTask }: Props) {
       { currentTab === 'R' ? 
         <>
           <TaskList tasks={relatedTasks} clickOnTask={clickOnTask}/> 
-          <LinkTask linkTask={linkTask} />
+          <LinkTask />
         </>
       : 
         'Watchers' }

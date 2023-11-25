@@ -8,11 +8,18 @@ import { getTasks } from '../store/slices/taskSlice'
 import { TaskForm } from '../components/TaskForm'
 import { Header } from '../components/MainPageHead'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
+import { Task } from '@/prisma/generated'
 
 export default function HomePage() {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const [creation, setCreation] = useState(false)
   const tasks = useSelector((state: RootState) => state.tasks.tasks)
+
+  function openTask(task: Task) {
+    router.push(`task/${task.id}`)
+  }
 
   useEffect(() => {
     dispatch(getTasks())
@@ -30,7 +37,7 @@ export default function HomePage() {
       { creation && <TaskForm setCreation={setCreation} /> }
       <TaskList 
         tasks={tasks}
-        clickOnTask={() => {}}
+        clickOnTask={openTask}
       />
     </VStack>
   )

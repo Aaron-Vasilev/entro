@@ -15,4 +15,12 @@ export async function POST(req: NextRequest) {
   return NextResponse.json(newTask)
 }
 
+export async function PUT(req: NextRequest) {
+  const { id, status } = await req.json()
+
+  const updatedTask = await prisma.task.update({ where: { id }, data: { status } })
+
+  return NextResponse.json(updatedTask)
+}
+
 

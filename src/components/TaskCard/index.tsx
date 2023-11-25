@@ -1,9 +1,7 @@
-import Image from 'next/image'
 import { Box, Flex } from '@chakra-ui/react'
 import { Task } from '../../prisma/generated'
-import { Button } from '../Button'
 import { TaskInfo } from '../TaskInfo'
-import { useRouter } from 'next/navigation'
+import { TaskStatus } from '../TaskStatus'
 
 interface Props {
   task: Task
@@ -11,7 +9,6 @@ interface Props {
 }
 
 export function TaskCard({ task, clickOnTask }: Props) {
-  const router = useRouter()
 
   function handleClick() {
     clickOnTask(task)
@@ -19,6 +16,7 @@ export function TaskCard({ task, clickOnTask }: Props) {
 
   return (
     <Box 
+      cursor="pointer"
       overflow="hidden" 
       borderWidth="1px"
       borderColor="secondary.100"
@@ -40,21 +38,9 @@ export function TaskCard({ task, clickOnTask }: Props) {
         <TaskInfo
           task={task}
         />
-        <Flex
-          alignItems="center"
-          borderLeft="1px solid"
-          borderLeftColor="rgba(223, 227, 235, 0.4)"
-          pl="32px"
-          gap="25px"
-        >
-          <Button
-            value={task.status}
-            handler={() => router.push(`task/${task.id}`)}
-          />
-          <Image
-            src="/arrowLeft.svg" alt="left arrow" width={6} height={12}
-          />
-        </Flex>
+        <TaskStatus
+          task={task}
+        />
       </Flex>
     </Box>
   )

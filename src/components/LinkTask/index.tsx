@@ -5,35 +5,28 @@ import Image from "next/image"
 import { RootState, useAppDispatch } from "../../store"
 import { useState } from "react"
 import { TaskList } from "../TaskList"
-import { isActiveTask, taskIsInRelatedTasks } from "../../lib"
+import { addRelation } from "@/store/slices/taskSlice"
 
-interface Props {
-  linkTask: Function
-}
-
-export function LinkTask({ linkTask }: Props) {
+export function LinkTask() {
   const dispatch = useAppDispatch()
-  const tasks = useSelector((state: RootState) => state.tasks.tasks)
-  const relatedTasks = useSelector((state: RootState) => state.tasks.relatedTasks)
   const activeTask = useSelector((state: RootState) => state.tasks.activeTask)
   const [searchTasks, setSearchTasks] = useState<Task[]>([])
   const [inputIsShown, setInputIsShown] = useState(false)
   const [searchWord, setSearchWord] = useState('')
 
-  function handleInput(e: any) {
+  async function handleInput(e: any) {
     const value = e.target.value
-    setSearchWord(value)
-  
-    if (value === '')
+
+    if (value === '') {
+      setSearchTasks([])
+      setSearchWord('')
       return
+    }
 
-    const searchingTasks = tasks.filter(task => (
-      !isActiveTask(activeTask, task) && 
-      !taskIsInRelatedTasks(relatedTasks, task) &&
-       task.title.includes(value)
-    ))
-
-    setSearchTasks(searchingTasks)
+    const res = await fetch(`/api/tasks?query=${value}&task=${activeTask.id}`)
+    const tasksResult = await res.json()
+    setSearchTasks(tasksResult)
+    setSearchWord(value)
   }
 
   function hide() {
@@ -42,7 +35,7 @@ export function LinkTask({ linkTask }: Props) {
   }
 
   async function handleClick (task: Task) {
-    const result = await dispatch(linkTask(task))
+    const result = await dispatch(addRelation(task.id))
 
     if (result.meta.requestStatus === 'fulfilled') {
       setInputIsShown(false)

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Heading, Flex, Box } from '@chakra-ui/react'
+import { Flex, Box } from '@chakra-ui/react'
 
 interface Props {
   children: ReactNode
@@ -8,13 +8,16 @@ interface Props {
 export function Layout({ children }: Props) {
   return (
     <main>
-      <Box
+      <Flex
         m="4rem"
+        justify="center"
       >
-        <Box>
+        <Box
+          width="664px"
+        >
           { children }
         </Box>
-      </Box>
+      </Flex>
     </main>
   )
 }

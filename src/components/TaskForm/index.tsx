@@ -1,11 +1,10 @@
 import { Box, Flex, FormControl, Text, Input, Select, Textarea } from "@chakra-ui/react"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { createTask, pushRelatedTask } from "../../store/slices/taskSlice"
+import { createTask } from "../../store/slices/taskSlice"
 import { Button } from '../Button'
 import { useAppDispatch } from "../../store"
 import { currentTime } from "../../lib"
-import { RelatedWatchers } from "../RelatedWatchers"
 
 enum Form {
   title = 'title',
@@ -184,7 +183,6 @@ export function TaskForm({ setCreation }: Props) {
                 })}
               />
             </FormControl>
-            <RelatedWatchers clickOnTask={() => console.log(1000)} linkTask={pushRelatedTask}/>
             <Flex
               gap="8px"
               justifyContent="flex-end"
