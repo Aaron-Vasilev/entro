@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Box, Flex, FormControl, Text, Input, Select, Textarea } from "@chakra-ui/react"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
@@ -68,7 +69,17 @@ export function TaskForm({ setCreation }: Props) {
           mb="24px"
           pb="24px"
         >
-          Image
+          <Flex
+            height="64px"
+            width="64px"
+            bg="primary.1000"
+            justify="center"
+            borderRadius="6px"
+          >
+            <Image
+              src="/plus-circle.svg" alt="new task" width={40} height={40}
+            />
+          </Flex>
           <Box>
             <FormControl
               isInvalid={!!errors[Form.title]}

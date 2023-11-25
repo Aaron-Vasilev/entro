@@ -5,6 +5,7 @@ import { TaskList } from "../TaskList"
 import { LinkTask } from "../LinkTask"
 import { RootState, useAppDispatch } from "../../store"
 import { getRelatedTasks } from "@/store/slices/taskSlice"
+import { Wathcers } from "../Watchers"
 
 type Tab = 'R' | 'W'
 
@@ -54,7 +55,7 @@ export function RelatedWatchers({ clickOnTask }: Props) {
           <LinkTask />
         </>
       : 
-        'Watchers' }
+        <Wathcers /> }
     </Box>
   )
 }

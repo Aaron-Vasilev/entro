@@ -20,7 +20,13 @@ model Task {
 }
 
 model TaskRelation {
-  id           Int      @id @unique
+  id           Int           @id @default(autoincrement())
   taskId       Int
   relatedId    Int
+}
+
+model Watcher {
+  id           Int           @id @default(autoincrement())
+  taskId       Int
+  name         String
 }

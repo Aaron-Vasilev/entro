@@ -23,6 +23,11 @@ export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
  * 
  */
 export type TaskRelation = $Result.DefaultSelection<Prisma.$TaskRelationPayload>
+/**
+ * Model Watcher
+ * 
+ */
+export type Watcher = $Result.DefaultSelection<Prisma.$WatcherPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -165,6 +170,16 @@ export class PrismaClient<
     * ```
     */
   get taskRelation(): Prisma.TaskRelationDelegate<ExtArgs>;
+
+  /**
+   * `prisma.watcher`: Exposes CRUD operations for the **Watcher** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Watchers
+    * const watchers = await prisma.watcher.findMany()
+    * ```
+    */
+  get watcher(): Prisma.WatcherDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -636,7 +651,8 @@ export namespace Prisma {
 
   export const ModelName: {
     Task: 'Task',
-    TaskRelation: 'TaskRelation'
+    TaskRelation: 'TaskRelation',
+    Watcher: 'Watcher'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -653,7 +669,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'task' | 'taskRelation'
+      modelProps: 'task' | 'taskRelation' | 'watcher'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -786,6 +802,72 @@ export namespace Prisma {
           count: {
             args: Prisma.TaskRelationCountArgs<ExtArgs>,
             result: $Utils.Optional<TaskRelationCountAggregateOutputType> | number
+          }
+        }
+      }
+      Watcher: {
+        payload: Prisma.$WatcherPayload<ExtArgs>
+        fields: Prisma.WatcherFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WatcherFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WatcherFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload>
+          }
+          findFirst: {
+            args: Prisma.WatcherFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WatcherFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload>
+          }
+          findMany: {
+            args: Prisma.WatcherFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload>[]
+          }
+          create: {
+            args: Prisma.WatcherCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload>
+          }
+          createMany: {
+            args: Prisma.WatcherCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.WatcherDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload>
+          }
+          update: {
+            args: Prisma.WatcherUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload>
+          }
+          deleteMany: {
+            args: Prisma.WatcherDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WatcherUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.WatcherUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$WatcherPayload>
+          }
+          aggregate: {
+            args: Prisma.WatcherAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateWatcher>
+          }
+          groupBy: {
+            args: Prisma.WatcherGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<WatcherGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WatcherCountArgs<ExtArgs>,
+            result: $Utils.Optional<WatcherCountAggregateOutputType> | number
           }
         }
       }
@@ -2755,6 +2837,892 @@ export namespace Prisma {
 
 
   /**
+   * Model Watcher
+   */
+
+  export type AggregateWatcher = {
+    _count: WatcherCountAggregateOutputType | null
+    _avg: WatcherAvgAggregateOutputType | null
+    _sum: WatcherSumAggregateOutputType | null
+    _min: WatcherMinAggregateOutputType | null
+    _max: WatcherMaxAggregateOutputType | null
+  }
+
+  export type WatcherAvgAggregateOutputType = {
+    id: number | null
+    taskId: number | null
+  }
+
+  export type WatcherSumAggregateOutputType = {
+    id: number | null
+    taskId: number | null
+  }
+
+  export type WatcherMinAggregateOutputType = {
+    id: number | null
+    taskId: number | null
+    name: string | null
+  }
+
+  export type WatcherMaxAggregateOutputType = {
+    id: number | null
+    taskId: number | null
+    name: string | null
+  }
+
+  export type WatcherCountAggregateOutputType = {
+    id: number
+    taskId: number
+    name: number
+    _all: number
+  }
+
+
+  export type WatcherAvgAggregateInputType = {
+    id?: true
+    taskId?: true
+  }
+
+  export type WatcherSumAggregateInputType = {
+    id?: true
+    taskId?: true
+  }
+
+  export type WatcherMinAggregateInputType = {
+    id?: true
+    taskId?: true
+    name?: true
+  }
+
+  export type WatcherMaxAggregateInputType = {
+    id?: true
+    taskId?: true
+    name?: true
+  }
+
+  export type WatcherCountAggregateInputType = {
+    id?: true
+    taskId?: true
+    name?: true
+    _all?: true
+  }
+
+  export type WatcherAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Watcher to aggregate.
+     */
+    where?: WatcherWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Watchers to fetch.
+     */
+    orderBy?: WatcherOrderByWithRelationInput | WatcherOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WatcherWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Watchers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Watchers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Watchers
+    **/
+    _count?: true | WatcherCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WatcherAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WatcherSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WatcherMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WatcherMaxAggregateInputType
+  }
+
+  export type GetWatcherAggregateType<T extends WatcherAggregateArgs> = {
+        [P in keyof T & keyof AggregateWatcher]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWatcher[P]>
+      : GetScalarType<T[P], AggregateWatcher[P]>
+  }
+
+
+
+
+  export type WatcherGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WatcherWhereInput
+    orderBy?: WatcherOrderByWithAggregationInput | WatcherOrderByWithAggregationInput[]
+    by: WatcherScalarFieldEnum[] | WatcherScalarFieldEnum
+    having?: WatcherScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WatcherCountAggregateInputType | true
+    _avg?: WatcherAvgAggregateInputType
+    _sum?: WatcherSumAggregateInputType
+    _min?: WatcherMinAggregateInputType
+    _max?: WatcherMaxAggregateInputType
+  }
+
+  export type WatcherGroupByOutputType = {
+    id: number
+    taskId: number
+    name: string
+    _count: WatcherCountAggregateOutputType | null
+    _avg: WatcherAvgAggregateOutputType | null
+    _sum: WatcherSumAggregateOutputType | null
+    _min: WatcherMinAggregateOutputType | null
+    _max: WatcherMaxAggregateOutputType | null
+  }
+
+  type GetWatcherGroupByPayload<T extends WatcherGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WatcherGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WatcherGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WatcherGroupByOutputType[P]>
+            : GetScalarType<T[P], WatcherGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WatcherSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["watcher"]>
+
+  export type WatcherSelectScalar = {
+    id?: boolean
+    taskId?: boolean
+    name?: boolean
+  }
+
+
+  export type $WatcherPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Watcher"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      taskId: number
+      name: string
+    }, ExtArgs["result"]["watcher"]>
+    composites: {}
+  }
+
+
+  type WatcherGetPayload<S extends boolean | null | undefined | WatcherDefaultArgs> = $Result.GetResult<Prisma.$WatcherPayload, S>
+
+  type WatcherCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<WatcherFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: WatcherCountAggregateInputType | true
+    }
+
+  export interface WatcherDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Watcher'], meta: { name: 'Watcher' } }
+    /**
+     * Find zero or one Watcher that matches the filter.
+     * @param {WatcherFindUniqueArgs} args - Arguments to find a Watcher
+     * @example
+     * // Get one Watcher
+     * const watcher = await prisma.watcher.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WatcherFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, WatcherFindUniqueArgs<ExtArgs>>
+    ): Prisma__WatcherClient<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Watcher that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WatcherFindUniqueOrThrowArgs} args - Arguments to find a Watcher
+     * @example
+     * // Get one Watcher
+     * const watcher = await prisma.watcher.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WatcherFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, WatcherFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__WatcherClient<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Watcher that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatcherFindFirstArgs} args - Arguments to find a Watcher
+     * @example
+     * // Get one Watcher
+     * const watcher = await prisma.watcher.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WatcherFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, WatcherFindFirstArgs<ExtArgs>>
+    ): Prisma__WatcherClient<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Watcher that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatcherFindFirstOrThrowArgs} args - Arguments to find a Watcher
+     * @example
+     * // Get one Watcher
+     * const watcher = await prisma.watcher.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WatcherFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, WatcherFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__WatcherClient<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Watchers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatcherFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Watchers
+     * const watchers = await prisma.watcher.findMany()
+     * 
+     * // Get first 10 Watchers
+     * const watchers = await prisma.watcher.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const watcherWithIdOnly = await prisma.watcher.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WatcherFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, WatcherFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Watcher.
+     * @param {WatcherCreateArgs} args - Arguments to create a Watcher.
+     * @example
+     * // Create one Watcher
+     * const Watcher = await prisma.watcher.create({
+     *   data: {
+     *     // ... data to create a Watcher
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WatcherCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, WatcherCreateArgs<ExtArgs>>
+    ): Prisma__WatcherClient<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Watchers.
+     *     @param {WatcherCreateManyArgs} args - Arguments to create many Watchers.
+     *     @example
+     *     // Create many Watchers
+     *     const watcher = await prisma.watcher.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WatcherCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, WatcherCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Watcher.
+     * @param {WatcherDeleteArgs} args - Arguments to delete one Watcher.
+     * @example
+     * // Delete one Watcher
+     * const Watcher = await prisma.watcher.delete({
+     *   where: {
+     *     // ... filter to delete one Watcher
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WatcherDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, WatcherDeleteArgs<ExtArgs>>
+    ): Prisma__WatcherClient<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Watcher.
+     * @param {WatcherUpdateArgs} args - Arguments to update one Watcher.
+     * @example
+     * // Update one Watcher
+     * const watcher = await prisma.watcher.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WatcherUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, WatcherUpdateArgs<ExtArgs>>
+    ): Prisma__WatcherClient<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Watchers.
+     * @param {WatcherDeleteManyArgs} args - Arguments to filter Watchers to delete.
+     * @example
+     * // Delete a few Watchers
+     * const { count } = await prisma.watcher.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WatcherDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, WatcherDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Watchers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatcherUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Watchers
+     * const watcher = await prisma.watcher.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WatcherUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, WatcherUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Watcher.
+     * @param {WatcherUpsertArgs} args - Arguments to update or create a Watcher.
+     * @example
+     * // Update or create a Watcher
+     * const watcher = await prisma.watcher.upsert({
+     *   create: {
+     *     // ... data to create a Watcher
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Watcher we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WatcherUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, WatcherUpsertArgs<ExtArgs>>
+    ): Prisma__WatcherClient<$Result.GetResult<Prisma.$WatcherPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Watchers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatcherCountArgs} args - Arguments to filter Watchers to count.
+     * @example
+     * // Count the number of Watchers
+     * const count = await prisma.watcher.count({
+     *   where: {
+     *     // ... the filter for the Watchers we want to count
+     *   }
+     * })
+    **/
+    count<T extends WatcherCountArgs>(
+      args?: Subset<T, WatcherCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WatcherCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Watcher.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatcherAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WatcherAggregateArgs>(args: Subset<T, WatcherAggregateArgs>): Prisma.PrismaPromise<GetWatcherAggregateType<T>>
+
+    /**
+     * Group by Watcher.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatcherGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WatcherGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WatcherGroupByArgs['orderBy'] }
+        : { orderBy?: WatcherGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WatcherGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWatcherGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Watcher model
+   */
+  readonly fields: WatcherFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Watcher.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WatcherClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Watcher model
+   */ 
+  interface WatcherFieldRefs {
+    readonly id: FieldRef<"Watcher", 'Int'>
+    readonly taskId: FieldRef<"Watcher", 'Int'>
+    readonly name: FieldRef<"Watcher", 'String'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Watcher findUnique
+   */
+  export type WatcherFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * Filter, which Watcher to fetch.
+     */
+    where: WatcherWhereUniqueInput
+  }
+
+
+  /**
+   * Watcher findUniqueOrThrow
+   */
+  export type WatcherFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * Filter, which Watcher to fetch.
+     */
+    where: WatcherWhereUniqueInput
+  }
+
+
+  /**
+   * Watcher findFirst
+   */
+  export type WatcherFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * Filter, which Watcher to fetch.
+     */
+    where?: WatcherWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Watchers to fetch.
+     */
+    orderBy?: WatcherOrderByWithRelationInput | WatcherOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Watchers.
+     */
+    cursor?: WatcherWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Watchers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Watchers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Watchers.
+     */
+    distinct?: WatcherScalarFieldEnum | WatcherScalarFieldEnum[]
+  }
+
+
+  /**
+   * Watcher findFirstOrThrow
+   */
+  export type WatcherFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * Filter, which Watcher to fetch.
+     */
+    where?: WatcherWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Watchers to fetch.
+     */
+    orderBy?: WatcherOrderByWithRelationInput | WatcherOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Watchers.
+     */
+    cursor?: WatcherWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Watchers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Watchers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Watchers.
+     */
+    distinct?: WatcherScalarFieldEnum | WatcherScalarFieldEnum[]
+  }
+
+
+  /**
+   * Watcher findMany
+   */
+  export type WatcherFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * Filter, which Watchers to fetch.
+     */
+    where?: WatcherWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Watchers to fetch.
+     */
+    orderBy?: WatcherOrderByWithRelationInput | WatcherOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Watchers.
+     */
+    cursor?: WatcherWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Watchers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Watchers.
+     */
+    skip?: number
+    distinct?: WatcherScalarFieldEnum | WatcherScalarFieldEnum[]
+  }
+
+
+  /**
+   * Watcher create
+   */
+  export type WatcherCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Watcher.
+     */
+    data: XOR<WatcherCreateInput, WatcherUncheckedCreateInput>
+  }
+
+
+  /**
+   * Watcher createMany
+   */
+  export type WatcherCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Watchers.
+     */
+    data: WatcherCreateManyInput | WatcherCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Watcher update
+   */
+  export type WatcherUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Watcher.
+     */
+    data: XOR<WatcherUpdateInput, WatcherUncheckedUpdateInput>
+    /**
+     * Choose, which Watcher to update.
+     */
+    where: WatcherWhereUniqueInput
+  }
+
+
+  /**
+   * Watcher updateMany
+   */
+  export type WatcherUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Watchers.
+     */
+    data: XOR<WatcherUpdateManyMutationInput, WatcherUncheckedUpdateManyInput>
+    /**
+     * Filter which Watchers to update
+     */
+    where?: WatcherWhereInput
+  }
+
+
+  /**
+   * Watcher upsert
+   */
+  export type WatcherUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Watcher to update in case it exists.
+     */
+    where: WatcherWhereUniqueInput
+    /**
+     * In case the Watcher found by the `where` argument doesn't exist, create a new Watcher with this data.
+     */
+    create: XOR<WatcherCreateInput, WatcherUncheckedCreateInput>
+    /**
+     * In case the Watcher was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WatcherUpdateInput, WatcherUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Watcher delete
+   */
+  export type WatcherDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+    /**
+     * Filter which Watcher to delete.
+     */
+    where: WatcherWhereUniqueInput
+  }
+
+
+  /**
+   * Watcher deleteMany
+   */
+  export type WatcherDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Watchers to delete
+     */
+    where?: WatcherWhereInput
+  }
+
+
+  /**
+   * Watcher without action
+   */
+  export type WatcherDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Watcher
+     */
+    select?: WatcherSelect<ExtArgs> | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -2788,6 +3756,15 @@ export namespace Prisma {
   };
 
   export type TaskRelationScalarFieldEnum = (typeof TaskRelationScalarFieldEnum)[keyof typeof TaskRelationScalarFieldEnum]
+
+
+  export const WatcherScalarFieldEnum: {
+    id: 'id',
+    taskId: 'taskId',
+    name: 'name'
+  };
+
+  export type WatcherScalarFieldEnum = (typeof WatcherScalarFieldEnum)[keyof typeof WatcherScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2942,7 +3919,7 @@ export namespace Prisma {
     NOT?: TaskRelationWhereInput | TaskRelationWhereInput[]
     taskId?: IntFilter<"TaskRelation"> | number
     relatedId?: IntFilter<"TaskRelation"> | number
-  }, "id" | "id">
+  }, "id">
 
   export type TaskRelationOrderByWithAggregationInput = {
     id?: SortOrder
@@ -2962,6 +3939,50 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"TaskRelation"> | number
     taskId?: IntWithAggregatesFilter<"TaskRelation"> | number
     relatedId?: IntWithAggregatesFilter<"TaskRelation"> | number
+  }
+
+  export type WatcherWhereInput = {
+    AND?: WatcherWhereInput | WatcherWhereInput[]
+    OR?: WatcherWhereInput[]
+    NOT?: WatcherWhereInput | WatcherWhereInput[]
+    id?: IntFilter<"Watcher"> | number
+    taskId?: IntFilter<"Watcher"> | number
+    name?: StringFilter<"Watcher"> | string
+  }
+
+  export type WatcherOrderByWithRelationInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    name?: SortOrder
+  }
+
+  export type WatcherWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: WatcherWhereInput | WatcherWhereInput[]
+    OR?: WatcherWhereInput[]
+    NOT?: WatcherWhereInput | WatcherWhereInput[]
+    taskId?: IntFilter<"Watcher"> | number
+    name?: StringFilter<"Watcher"> | string
+  }, "id">
+
+  export type WatcherOrderByWithAggregationInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    name?: SortOrder
+    _count?: WatcherCountOrderByAggregateInput
+    _avg?: WatcherAvgOrderByAggregateInput
+    _max?: WatcherMaxOrderByAggregateInput
+    _min?: WatcherMinOrderByAggregateInput
+    _sum?: WatcherSumOrderByAggregateInput
+  }
+
+  export type WatcherScalarWhereWithAggregatesInput = {
+    AND?: WatcherScalarWhereWithAggregatesInput | WatcherScalarWhereWithAggregatesInput[]
+    OR?: WatcherScalarWhereWithAggregatesInput[]
+    NOT?: WatcherScalarWhereWithAggregatesInput | WatcherScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Watcher"> | number
+    taskId?: IntWithAggregatesFilter<"Watcher"> | number
+    name?: StringWithAggregatesFilter<"Watcher"> | string
   }
 
   export type TaskCreateInput = {
@@ -3032,19 +4053,17 @@ export namespace Prisma {
   }
 
   export type TaskRelationCreateInput = {
-    id: number
     taskId: number
     relatedId: number
   }
 
   export type TaskRelationUncheckedCreateInput = {
-    id: number
+    id?: number
     taskId: number
     relatedId: number
   }
 
   export type TaskRelationUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
     taskId?: IntFieldUpdateOperationsInput | number
     relatedId?: IntFieldUpdateOperationsInput | number
   }
@@ -3056,13 +4075,12 @@ export namespace Prisma {
   }
 
   export type TaskRelationCreateManyInput = {
-    id: number
+    id?: number
     taskId: number
     relatedId: number
   }
 
   export type TaskRelationUpdateManyMutationInput = {
-    id?: IntFieldUpdateOperationsInput | number
     taskId?: IntFieldUpdateOperationsInput | number
     relatedId?: IntFieldUpdateOperationsInput | number
   }
@@ -3071,6 +4089,45 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     taskId?: IntFieldUpdateOperationsInput | number
     relatedId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type WatcherCreateInput = {
+    taskId: number
+    name: string
+  }
+
+  export type WatcherUncheckedCreateInput = {
+    id?: number
+    taskId: number
+    name: string
+  }
+
+  export type WatcherUpdateInput = {
+    taskId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type WatcherUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    taskId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type WatcherCreateManyInput = {
+    id?: number
+    taskId: number
+    name: string
+  }
+
+  export type WatcherUpdateManyMutationInput = {
+    taskId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type WatcherUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    taskId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3201,6 +4258,34 @@ export namespace Prisma {
     relatedId?: SortOrder
   }
 
+  export type WatcherCountOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    name?: SortOrder
+  }
+
+  export type WatcherAvgOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+  }
+
+  export type WatcherMaxOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    name?: SortOrder
+  }
+
+  export type WatcherMinOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    name?: SortOrder
+  }
+
+  export type WatcherSumOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -3295,6 +4380,10 @@ export namespace Prisma {
      * @deprecated Use TaskRelationDefaultArgs instead
      */
     export type TaskRelationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TaskRelationDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use WatcherDefaultArgs instead
+     */
+    export type WatcherArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = WatcherDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

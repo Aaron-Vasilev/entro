@@ -123,6 +123,12 @@ exports.Prisma.TaskRelationScalarFieldEnum = {
   relatedId: 'relatedId'
 };
 
+exports.Prisma.WatcherScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  name: 'name'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -136,7 +142,8 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.ModelName = {
   Task: 'Task',
-  TaskRelation: 'TaskRelation'
+  TaskRelation: 'TaskRelation',
+  Watcher: 'Watcher'
 };
 
 /**
