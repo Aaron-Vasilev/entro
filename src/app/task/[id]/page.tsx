@@ -19,7 +19,10 @@ export default function TaskPage({ params }: { params: { id: string } }) {
   const activeTask = useSelector((state: RootState) => state.tasks.activeTask)
   const router = useRouter()
   const goHome = () => { router.push('/') }
-  const clickOnTask = (task: Task) => { router.push('/task/' + task.id.toString()) }
+
+  function clickOnTask(task: Task) {
+    router.push(`/task/${task.id}`)
+  }
 
   useEffect(() => {
     dispatch(getTask(+params.id))

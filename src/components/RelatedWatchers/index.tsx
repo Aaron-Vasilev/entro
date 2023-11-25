@@ -15,13 +15,14 @@ interface Props {
 
 export function RelatedWatchers({ clickOnTask }: Props) {
   const dispatch = useAppDispatch()
+  const activeTask = useSelector((state: RootState) => state.tasks.activeTask)
   const relatedTasks = useSelector((state: RootState) => state.tasks.relatedTasks)
   const [currentTab, setCurrentTab] = useState('R')
   const isActive = (tab: Tab): boolean => currentTab === tab
 
   useEffect(() => {
     dispatch(getRelatedTasks())
-  }, [])
+  }, [activeTask])
 
   return (
     <Box>

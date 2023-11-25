@@ -75,6 +75,7 @@ export const taskSlice = createSlice({
         state.loading = false
       })
       .addCase(getRelatedTasks.pending, (state) => {
+        state.relatedTasks = []
         state.loading = true
       })
       .addCase(getRelatedTasks.fulfilled, (state, action) => {
@@ -137,14 +138,14 @@ export const getRelatedTasks = createAsyncThunk<Task[], undefined, { state: Root
 
 export const addRelation = createAsyncThunk<Task[], number, { state: RootState }>(
   '/addRelation',
-  async (relation, thunkApi) => {
-    const task = thunkApi.getState().tasks.activeTask.id
+  async (relatedId, thunkApi) => {
+    const taskId = thunkApi.getState().tasks.activeTask.id
     const res = await fetch(`/api/relation`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ task, relation })
+      body: JSON.stringify({ taskId, relatedId })
     })
 
     return await res.json()
