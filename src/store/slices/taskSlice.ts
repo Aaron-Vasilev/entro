@@ -7,6 +7,7 @@ interface TasksState {
   tasks: Task[]
   relatedTasks: Task[]
   loading: boolean
+  relatedLoading: boolean
   error: boolean
 }
 
@@ -23,6 +24,7 @@ const initialState: TasksState = {
   tasks: [],
   relatedTasks: [],
   loading: false,
+  relatedLoading: false,
   error: false
 }
 
@@ -68,19 +70,19 @@ export const taskSlice = createSlice({
         state.loading = false
       })
       .addCase(addRelation.pending, (state) => {
-        state.loading = true
+        state.relatedLoading = true
       })
       .addCase(addRelation.fulfilled, (state, action) => {
         state.relatedTasks = action.payload
-        state.loading = false
+        state.relatedLoading = false
       })
       .addCase(getRelatedTasks.pending, (state) => {
         state.relatedTasks = []
-        state.loading = true
+        state.relatedLoading = true
       })
       .addCase(getRelatedTasks.fulfilled, (state, action) => {
         state.relatedTasks = action.payload
-        state.loading = false
+        state.relatedLoading = false
       })
   },
 })
@@ -152,7 +154,7 @@ export const addRelation = createAsyncThunk<Task[], number, { state: RootState }
   }
 )
 
-export const changeStatus = createAsyncThunk<void, { id: number, status: string }>(
+export const changeStatus = createAsyncThunk<void, Partial<Task>>(
   '/changeStatus',
   async (data) => {
     await fetch(`/api/task`, {

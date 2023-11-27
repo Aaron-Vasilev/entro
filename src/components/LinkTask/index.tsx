@@ -1,11 +1,12 @@
-import { Button, Box, Heading, Input } from "@chakra-ui/react"
+import { Button, Box, Heading, Input, Flex } from "@chakra-ui/react"
 import { Task } from '../../prisma/generated'
 import { useSelector } from "react-redux"
 import Image from "next/image"
 import { RootState, useAppDispatch } from "../../store"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { TaskList } from "../TaskList"
 import { addRelation } from "@/store/slices/taskSlice"
+import { debounce } from "lodash"
 
 export function LinkTask() {
   const dispatch = useAppDispatch()
@@ -13,6 +14,16 @@ export function LinkTask() {
   const [searchTasks, setSearchTasks] = useState<Task[]>([])
   const [inputIsShown, setInputIsShown] = useState(false)
   const [searchWord, setSearchWord] = useState('')
+  const [loading, setLoading] = useState(false)
+  const debounceFn = useCallback(debounce(handleDebounceFn, 1000), []);
+
+
+  async function handleDebounceFn(value: string) {
+    const res = await fetch(`/api/tasks?query=${value}&task=${activeTask.id}`)
+    const tasksResult = await res.json()
+    setLoading(false)
+    setSearchTasks(tasksResult)
+  }
 
   async function handleInput(e: any) {
     const value = e.target.value
@@ -23,10 +34,9 @@ export function LinkTask() {
       return
     }
 
-    const res = await fetch(`/api/tasks?query=${value}&task=${activeTask.id}`)
-    const tasksResult = await res.json()
-    setSearchTasks(tasksResult)
+    setLoading(true)
     setSearchWord(value)
+    debounceFn(value)
   }
 
   function hide() {
@@ -45,18 +55,19 @@ export function LinkTask() {
 
   if (inputIsShown) {
     return (
-      <Box
+      <Flex
+        direction="column"
         py="27px"
       >
         <Input 
+          value={searchWord}
           onChange={handleInput}
         />
-        { searchWord.length > 0 &&
           <TaskList 
             tasks={searchTasks}
             clickOnTask={handleClick}
+            loading={loading}
           />
-        }
         <Button
           mt="12px"
           bg="none"
@@ -70,7 +81,7 @@ export function LinkTask() {
             Hide
           </Heading>
         </Button>
-      </Box>
+      </Flex>
     )
   }
 

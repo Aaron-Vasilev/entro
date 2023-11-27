@@ -16,6 +16,7 @@ export default function HomePage() {
   const dispatch = useAppDispatch()
   const [creation, setCreation] = useState(false)
   const tasks = useSelector((state: RootState) => state.tasks.tasks)
+  const loading = useSelector((state: RootState) => state.tasks.loading)
 
   function openTask(task: Task) {
     router.push(`task/${task.id}`)
@@ -38,6 +39,7 @@ export default function HomePage() {
       <TaskList 
         tasks={tasks}
         clickOnTask={openTask}
+        loading={loading}
       />
     </VStack>
   )

@@ -1,11 +1,24 @@
-import { Box, Grid, Text } from '@chakra-ui/react'
-import { Task } from '../../prisma/generated'
+import { useSelector } from 'react-redux'
+import { RootState, useAppDispatch } from '@/store'
+import { debounce } from 'lodash'
+import { changeStatus } from '@/store/slices/taskSlice'
+import { useCallback, useState } from 'react'
+import { Box, Grid, Text, Textarea } from '@chakra-ui/react'
 
-interface Prop {
-  task: Task
-}
+export function TaskDetail() {
+  const dispatch = useAppDispatch()
+  const task = useSelector((state: RootState) => state.tasks.activeTask)
+  const [description, setDescription] = useState(task.description)
+  const debounceFn = useCallback(debounce(handleDebounceFn, 1500), []);
 
-export function TaskDetail({ task }: Prop) {
+  async function handleDebounceFn(description: string) {
+    dispatch(changeStatus({ id: task.id, description }))
+  }
+
+  function handleChange (event: any) {
+      setDescription(event.target.value)
+      debounceFn(event.target.value)
+  }
 
   return (
     <Grid
@@ -27,12 +40,32 @@ export function TaskDetail({ task }: Prop) {
       <Box
         gridColumn="span 3"
         justifySelf="normal"
+        p="16px"
       >
-        <Detail
-          label="Description"
-          value={task.description}
-          size="L"
-        />
+        <Box
+        >
+          <Text
+            textColor="secondary.500"
+            fontSize="13px"
+            lineHeight="18px"
+            mb="8px"
+          >
+            Description
+          </Text>
+          <Textarea
+            w="576px"
+            h="134px"
+            px="16px"
+            py="16px"
+            borderRadius="10px"
+            minHeight="auto"
+            bg="primary.200"
+            fontSize="13px"
+            draggable="false"
+            value={description}
+            onChange={handleChange}
+          />
+        </Box>
       </Box>
     </Grid>
   )
@@ -41,34 +74,9 @@ export function TaskDetail({ task }: Prop) {
 interface Props {
   label: string
   value: string
-  size?: 'L' | 'S'
 }
 
-function Detail({ label, value, size = 'S' }: Props) {
-  let width: string
-  let height: string
-  let radius: string
-  let px: string
-  let py: string
-
-  switch (size) {
-    case 'S': {
-      width = 'fit-content'
-      height = 'auto'
-      radius = '16px'
-      px='12px'
-      py='2px'
-      break;
-    }
-    case 'L': {
-      width = 'auto'
-      height = '134px'
-      radius = '10px'
-      px = py = '16px'
-      break;
-    }
-  }
-
+function Detail({ label, value }: Props) {
   return (
     <Box
       p="16px"
@@ -82,11 +90,11 @@ function Detail({ label, value, size = 'S' }: Props) {
         {label}
       </Text>
       <Box
-        w={width}
-        px={px}
-        py={py}
-        borderRadius={radius}
-        minHeight={height}
+        w="fit-content"
+        px="12px"
+        py="2px"
+        borderRadius="16px"
+        minHeight="auto"
         bg="primary.200"
         fontSize="13px"
       >

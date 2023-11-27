@@ -20,9 +20,9 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const { id, status } = await req.json()
+  const data = await req.json()
 
-  const updatedTask = await prisma.task.update({ where: { id }, data: { status } })
+  const updatedTask = await prisma.task.update({ where: { id: data.id }, data })
 
   return NextResponse.json(updatedTask)
 }

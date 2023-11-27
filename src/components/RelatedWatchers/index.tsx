@@ -22,7 +22,7 @@ export function RelatedWatchers({ clickOnTask }: Props) {
 
   useEffect(() => {
     dispatch(getRelatedTasks())
-  }, [activeTask])
+  }, [activeTask.id])
 
   return (
     <Box>
