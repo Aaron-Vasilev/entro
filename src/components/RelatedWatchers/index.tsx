@@ -17,6 +17,7 @@ export function RelatedWatchers({ clickOnTask }: Props) {
   const dispatch = useAppDispatch()
   const activeTask = useSelector((state: RootState) => state.tasks.activeTask)
   const relatedTasks = useSelector((state: RootState) => state.tasks.relatedTasks)
+  const loading = useSelector((state: RootState) => state.tasks.getRelatedLoading)
   const [currentTab, setCurrentTab] = useState('R')
   const isActive = (tab: Tab): boolean => currentTab === tab
 
@@ -52,7 +53,7 @@ export function RelatedWatchers({ clickOnTask }: Props) {
       </Flex>
       { currentTab === 'R' ? 
         <>
-          <TaskList tasks={relatedTasks} clickOnTask={clickOnTask}/> 
+          <TaskList tasks={relatedTasks} clickOnTask={clickOnTask} loading={loading}/> 
           <LinkTask />
         </>
       : 

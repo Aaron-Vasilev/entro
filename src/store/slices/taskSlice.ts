@@ -7,7 +7,8 @@ interface TasksState {
   tasks: Task[]
   relatedTasks: Task[]
   loading: boolean
-  relatedLoading: boolean
+  addRelationLoading: boolean
+  getRelatedLoading: boolean
   error: boolean
 }
 
@@ -24,7 +25,8 @@ const initialState: TasksState = {
   tasks: [],
   relatedTasks: [],
   loading: false,
-  relatedLoading: false,
+  addRelationLoading: false,
+  getRelatedLoading: false,
   error: false
 }
 
@@ -70,19 +72,20 @@ export const taskSlice = createSlice({
         state.loading = false
       })
       .addCase(addRelation.pending, (state) => {
-        state.relatedLoading = true
+        state.relatedTasks = []
+        state.addRelationLoading = true
       })
       .addCase(addRelation.fulfilled, (state, action) => {
         state.relatedTasks = action.payload
-        state.relatedLoading = false
+        state.addRelationLoading = false
       })
       .addCase(getRelatedTasks.pending, (state) => {
         state.relatedTasks = []
-        state.relatedLoading = true
+        state.getRelatedLoading = true
       })
       .addCase(getRelatedTasks.fulfilled, (state, action) => {
         state.relatedTasks = action.payload
-        state.relatedLoading = false
+        state.getRelatedLoading = false
       })
   },
 })

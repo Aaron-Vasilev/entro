@@ -18,6 +18,6 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
       relatedTasks.push(task)
   }
 
-  return NextResponse.json(relatedTasks)
+  return NextResponse.json(relatedTasks.filter(t => t.id !== taskId))
 }
 

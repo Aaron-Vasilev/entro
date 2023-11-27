@@ -6,7 +6,10 @@ export async function POST(req: NextRequest) {
   const data = await req.json()
   const relatedTasks: Task[] = []
 
-  await prisma.taskRelation.create({ data })
+  await prisma.taskRelation.createMany({ data: [
+    { relatedId: data.relatedId, taskId: data.taskId },
+    { relatedId: data.taskId, taskId: data.relatedId },
+  ] })
 
   const relations = await prisma.taskRelation.findMany({
     where: {
@@ -20,5 +23,5 @@ export async function POST(req: NextRequest) {
       relatedTasks.push(task)
   }
 
-  return NextResponse.json(relatedTasks)
+  return NextResponse.json(relatedTasks.filter(task => task.id !== data.taskId))
 }

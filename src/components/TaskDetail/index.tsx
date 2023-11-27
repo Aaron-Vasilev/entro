@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@/store'
 import { debounce } from 'lodash'
 import { changeStatus } from '@/store/slices/taskSlice'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Box, Grid, Text, Textarea } from '@chakra-ui/react'
 
 export function TaskDetail() {
@@ -19,6 +19,10 @@ export function TaskDetail() {
       setDescription(event.target.value)
       debounceFn(event.target.value)
   }
+
+  useEffect(() => {
+    setDescription(task.description)
+  }, [task.id])
 
   return (
     <Grid

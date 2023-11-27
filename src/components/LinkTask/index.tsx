@@ -45,12 +45,10 @@ export function LinkTask() {
   }
 
   async function handleClick (task: Task) {
-    const result = await dispatch(addRelation(task.id))
+    await dispatch(addRelation(task.id))
 
-    if (result.meta.requestStatus === 'fulfilled') {
-      setInputIsShown(false)
-      setSearchWord('')
-    }
+    setInputIsShown(false)
+    setSearchWord('')
   }
 
   if (inputIsShown) {

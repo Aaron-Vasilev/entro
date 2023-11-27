@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Box, Flex, Input, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
@@ -21,6 +21,10 @@ export function TaskInfoEdit() {
       setTitle(event.target.value)
       debounceFn(event.target.value)
   }
+
+  useEffect(() => {
+    setTitle(task.title)
+  }, [task.id])
 
   return (
     <Flex
