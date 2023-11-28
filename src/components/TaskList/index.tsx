@@ -19,7 +19,7 @@ export function TaskList({ tasks, clickOnTask, loading }: Props) {
         gap="16px"
         flexDirection="column"
       >
-        {tasks.map(task =>  <TaskCard key={task.id} task={task} clickOnTask={clickOnTask} />)}
+        {tasks.map(task => <TaskCard key={task.id} task={task} clickOnTask={clickOnTask} />)}
       </Flex>
     </>
   )

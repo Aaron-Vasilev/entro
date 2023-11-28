@@ -54,19 +54,9 @@ export default function TaskPage({ params }: { params: { id: string } }) {
       px="28px"
       bg="secondary.50"
     >
-      <Box
-        borderBottom="1px solid"
-        borderBottomColor="rgba(152, 162, 179, 0.4)"
-        pb="24px"
-      >
-        <TaskInfoEdit />
-      </Box>
-        <TaskDetail />
-      <Box
-        mt="74px"
-      >
-        <RelatedWatchers clickOnTask={clickOnTask}/>
-      </Box>
+      <TaskInfoEdit />
+      <TaskDetail />
+      <RelatedWatchers clickOnTask={clickOnTask}/>
     </Box>
     </>
   )

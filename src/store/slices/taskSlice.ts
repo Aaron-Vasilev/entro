@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { Task } from '../../prisma/generated/'
 import { RootState } from '..'
 
@@ -33,20 +33,7 @@ const initialState: TasksState = {
 export const taskSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {
-    addTasks: (state, action: PayloadAction<Task[]>) => {
-      state.tasks.push(...action.payload)
-    },
-    setTasks: (state, action: PayloadAction<Task[]>) => {
-      state.tasks = action.payload
-    },
-    setActiveTask: (state, action: PayloadAction<Task>) => {
-      state.activeTask = action.payload
-    },
-    setRelatedTasks: (state, action: PayloadAction<Task[]>) => {
-      state.relatedTasks = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createTask.pending, (state) => {
@@ -72,7 +59,6 @@ export const taskSlice = createSlice({
         state.loading = false
       })
       .addCase(addRelation.pending, (state) => {
-        state.relatedTasks = []
         state.addRelationLoading = true
       })
       .addCase(addRelation.fulfilled, (state, action) => {
@@ -80,7 +66,6 @@ export const taskSlice = createSlice({
         state.addRelationLoading = false
       })
       .addCase(getRelatedTasks.pending, (state) => {
-        state.relatedTasks = []
         state.getRelatedLoading = true
       })
       .addCase(getRelatedTasks.fulfilled, (state, action) => {
@@ -90,12 +75,6 @@ export const taskSlice = createSlice({
   },
 })
 
-export const { 
-  addTasks,
-  setTasks, 
-  setActiveTask,
-  setRelatedTasks
-} = taskSlice.actions
 
 export const createTask = createAsyncThunk<Task, Task, { state: RootState }>(
   '/createTask',

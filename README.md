@@ -7,11 +7,11 @@ pnpm install
 ```
 4.
 ```sh
-pnpx prisma generate
+pnpm build
 ```
 5.
 ```sh
-pnpm dev
+pnpm start 3000
 ```
 
 # ⛏️ Built Using

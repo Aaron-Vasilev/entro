@@ -26,7 +26,9 @@ export function RelatedWatchers({ clickOnTask }: Props) {
   }, [activeTask.id])
 
   return (
-    <Box>
+    <Box
+      mt="74px"
+    >
       <Flex
         gap="40px"
         pl="14px"

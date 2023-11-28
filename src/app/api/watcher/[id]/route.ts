@@ -16,6 +16,5 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     } 
   })
 
-  console.log('† line 20 watchers', watchers)
   return NextResponse.json(watchers)
 }

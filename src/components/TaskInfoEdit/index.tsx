@@ -29,6 +29,9 @@ export function TaskInfoEdit() {
   return (
     <Flex
       gap="24px"
+      borderBottom="1px solid"
+      borderBottomColor="rgba(152, 162, 179, 0.4)"
+      pb="24px"
     >
       <Flex
         height="64px"
