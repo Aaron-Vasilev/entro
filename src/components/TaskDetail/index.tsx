@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@/store'
 import { debounce } from 'lodash'
-import { changeStatus } from '@/store/slices/taskSlice'
+import { changeTask } from '@/store/slices/taskSlice'
 import { useCallback, useEffect, useState } from 'react'
-import { Box, Grid, Text, Textarea } from '@chakra-ui/react'
+import { Box, Grid, Select, Text, Textarea } from '@chakra-ui/react'
 
 export function TaskDetail() {
   const dispatch = useAppDispatch()
@@ -12,12 +12,20 @@ export function TaskDetail() {
   const debounceFn = useCallback(debounce(handleDebounceFn, 1500), []);
 
   async function handleDebounceFn(description: string) {
-    dispatch(changeStatus({ id: task.id, description }))
+    dispatch(changeTask({ id: task.id, description }))
   }
 
   function handleChange (event: any) {
       setDescription(event.target.value)
       debounceFn(event.target.value)
+  }
+
+  function statusHander(e: any) {
+    dispatch(changeTask({ id: task.id, status: e.target.value }))
+  }
+
+  function assigneeHandler(e: any) {
+    dispatch(changeTask({ id: task.id, assigneeName: e.target.value }))
   }
 
   useEffect(() => {
@@ -31,16 +39,49 @@ export function TaskDetail() {
     >
       <Detail
         label="Status"
-        value={task.status}
-      />
+      >
+        <Select
+          h="18px"
+          py="2px"
+          borderRadius="16px"
+          minHeight="auto"
+          bg="primary.200"
+          fontSize="13px"
+          border="none"
+          onChange={statusHander}
+          defaultValue={task.status}
+          _focusVisible={{ outline: "none" }} 
+        >
+          <option value="Open">Open</option>
+          <option value="In Porgress">In Progress</option>
+          <option value="Done">Done</option>
+        </Select>
+      </Detail>
       <Detail
         label="Date Created"
         value={task.creationDate.toString()}
       />
       <Detail
         label="Assignee"
-        value={task.assigneeName}
-      />
+      >
+        <Select
+          h="18px"
+          py="2px"
+          borderRadius="16px"
+          minHeight="auto"
+          bg="primary.200"
+          fontSize="13px"
+          border="none"
+          onChange={assigneeHandler}
+          defaultValue={task.assigneeName}
+          _focusVisible={{ outline: "none" }} 
+        >
+          <option value="Unassigned">Unassigned</option>
+          <option value="Beth">Beth</option>
+          <option value="Dave">Dave</option>
+          <option value="Emily">Emily</option>
+        </Select>
+      </Detail>
       <Box
         gridColumn="span 3"
         justifySelf="normal"
@@ -77,10 +118,11 @@ export function TaskDetail() {
 
 interface Props {
   label: string
-  value: string
+  value?: string
+  children?: React.ReactNode
 }
 
-function Detail({ label, value }: Props) {
+function Detail({ label, value, children }: Props) {
   return (
     <Box
       p="16px"
@@ -94,15 +136,14 @@ function Detail({ label, value }: Props) {
         {label}
       </Text>
       <Box
+        px={value && "13px"}
         w="fit-content"
-        px="12px"
-        py="2px"
         borderRadius="16px"
         minHeight="auto"
         bg="primary.200"
         fontSize="13px"
       >
-        {value}
+        {value || children}
       </Box>
     </Box>
   )

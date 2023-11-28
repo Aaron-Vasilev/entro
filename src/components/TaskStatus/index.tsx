@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Flex, Select } from '@chakra-ui/react'
 import { Task } from '../../prisma/generated'
 import { useAppDispatch } from '@/store'
-import { changeStatus } from '@/store/slices/taskSlice'
+import { changeTask } from '@/store/slices/taskSlice'
 
 interface Props {
   task: Task
@@ -16,7 +16,7 @@ export function TaskStatus({ task }: Props) {
   }
 
   function statusHander(e: any) {
-    dispatch(changeStatus({ id: task.id, status: e.target.value }))
+    dispatch(changeTask({ id: task.id, status: e.target.value }))
   }
 
   return (

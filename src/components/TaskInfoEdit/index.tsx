@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@/store'
 import { debounce } from 'lodash'
-import { changeStatus } from '@/store/slices/taskSlice'
+import { changeTask } from '@/store/slices/taskSlice'
 
 export function TaskInfoEdit() {
   const dispatch = useAppDispatch()
@@ -14,7 +14,7 @@ export function TaskInfoEdit() {
   const debounceFn = useCallback(debounce(handleDebounceFn, 1500), []);
 
   async function handleDebounceFn(title: string) {
-    dispatch(changeStatus({ id: task.id, title }))
+    dispatch(changeTask({ id: task.id, title }))
   }
 
   function handleChange (event: any) {

@@ -72,6 +72,10 @@ export const taskSlice = createSlice({
         state.relatedTasks = action.payload
         state.getRelatedLoading = false
       })
+      .addCase(changeTask.fulfilled, (state, action) => {
+        state.activeTask.assigneeName = action.payload.assigneeName
+        state.activeTask.status = action.payload.status
+      })
   },
 })
 
@@ -136,15 +140,17 @@ export const addRelation = createAsyncThunk<Task[], number, { state: RootState }
   }
 )
 
-export const changeStatus = createAsyncThunk<void, Partial<Task>>(
-  '/changeStatus',
+export const changeTask = createAsyncThunk<Task, Partial<Task>>(
+  '/changeTask',
   async (data) => {
-    await fetch(`/api/task`, {
+    const res = await fetch(`/api/task`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     })
+
+    return await res.json()
   }
 )
