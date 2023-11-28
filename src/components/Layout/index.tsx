@@ -13,7 +13,7 @@ export function Layout({ children }: Props) {
         justify="center"
       >
         <Box
-          width="664px"
+          width="680px"
         >
           { children }
         </Box>

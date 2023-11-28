@@ -59,7 +59,7 @@ export function TaskDetail() {
       </Detail>
       <Detail
         label="Date Created"
-        value={task.creationDate.toString()}
+        value={task.creationDate}
       />
       <Detail
         label="Assignee"
@@ -136,12 +136,14 @@ function Detail({ label, value, children }: Props) {
         {label}
       </Text>
       <Box
-        px={value && "13px"}
+        px={value && "11px"}
+        h={value && "23.5px"}
         w="fit-content"
         borderRadius="16px"
         minHeight="auto"
         bg="primary.200"
         fontSize="13px"
+        whiteSpace="nowrap"
       >
         {value || children}
       </Box>

@@ -34,7 +34,7 @@ export function TaskStatus({ task }: Props) {
         borderRadius="6px"
         fontSize="12px"
         lineHeight="20px"
-        w="100px"
+        w="120px"
         h="32px"
         pl="0"
         textAlign='center'

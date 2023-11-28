@@ -11,7 +11,7 @@ export function TaskInfoEdit() {
   const task = useSelector((state: RootState) => state.tasks.activeTask)
   const cardInfo = `${task.assigneeName} · ${task.creationDate}`
   const [title, setTitle] = useState(task.title)
-  const debounceFn = useCallback(debounce(handleDebounceFn, 1500), []);
+  const debounceFn = useCallback(debounce(handleDebounceFn, 1000), []);
 
   async function handleDebounceFn(title: string) {
     dispatch(changeTask({ id: task.id, title }))
@@ -44,10 +44,13 @@ export function TaskInfoEdit() {
           src="/taskdone.svg" alt="left arrow" width={40} height={40}
         />
       </Flex>
-      <Box>
+      <Box
+        flexGrow={1}
+      >
         <Input
           size="14px"
           fontWeight="bold"
+          borderRadius="4px"
           mb="8px"
           border="none"
           outline="primary.1000"
